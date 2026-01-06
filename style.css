@@ -239,6 +239,10 @@ h1, h2, h3, h4 {
     width: 100%;
 }
 
+.product-carousel .nav-arrow{
+    top: 50%;
+}
+
 .carousel-viewport {
     overflow: hidden;
     width: 100%;
@@ -884,19 +888,58 @@ h1, h2, h3, h4 {
     max-height: 150px;
 }
 
+.accordion-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accordion-icon svg {
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother rotation */
+}
+
+.icon-plus {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.icon-close {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+.accordion-header:hover .icon-plus {
+    transform: rotate(180deg);
+}
+
+.accordion-item.active .icon-plus {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+.accordion-item.active .icon-close {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
 
 /* Mini Modal Styles (Shop Look) */
+/* Mini Modal Styles (Shop Look) */
 .mini-modal-backdrop {
-    position: fixed;
+    position: absolute; 
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 2001; /* Higher than main modal just in case, or same level */
+    height: 100%;
+    background-color: rgba(0,0,0,0.1); 
+    z-index: 50; 
     display: none;
-    align-items: center;
-    justify-content: center;
+    align-items: center; /* Centered vertically like original modal logic */
+    justify-content: center; /* Centered horizontally */
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -908,57 +951,69 @@ h1, h2, h3, h4 {
 
 .mini-modal-content {
     background-color: #fff;
-    width: 90%;
-    max-width: 380px;
+    width: 90%; 
+    max-width: 380px; /* Restored exact original max-width */
     border-radius: 4px;
-    padding: 1.5rem 0; /* Vertical padding */
+    padding: 1.5rem 0;
     box-shadow: 0 5px 25px rgba(0,0,0,0.15);
     transform: translateY(10px);
-    transition: transform 0.3s ease;
+    opacity: 0;
+    transition: all 0.3s ease;
     overflow: hidden;
+    margin: 0; /* Remove potential margins */
 }
 
+/* Single active state rule */
 .mini-modal-backdrop.active .mini-modal-content {
     transform: translateY(0);
+    opacity: 1;
 }
 
 .mini-modal-header {
-    padding: 0 1.5rem 1rem 1.5rem;
+    padding: 0.8rem 1.5rem; /* Reduced vertical padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e0e0e0; /* Distinct grey line */
 }
 
 .mini-modal-header h3 {
-    font-size: 1.1rem;
+    font-size: 1rem; /* Slightly smaller/sharper */
+    font-family: 'Oswald', sans-serif; /* Condensed look from image */
+    text-transform: uppercase; /* Assumption based on "Diseños encontrados" usually being header style, verify */
+    /* Screenshot showed "Diseños encontrados" - let's stick to standard Sans Bold if Oswald isn't loaded, or assume Impact-like */
+    /* Let's use standard sans, but condensed logic */
     font-family: var(--font-sans);
     font-weight: 700;
+    text-transform: none; /* Screenshot appeared mixed case */
+    letter-spacing: -0.5px;
     margin: 0;
 }
 
 .close-mini-modal-btn {
+    font-size: 1.3rem;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    line-height: 1;
-    color: #999;
+    color: #333; /* Darker close icon */
+    padding: 0;
 }
 
 .mini-modal-body {
-    padding: 1rem 1.5rem 0 1.5rem;
+    padding: 1.2rem 1.5rem;
 }
 
 .mini-product-row {
     display: flex;
     align-items: center;
-    gap: 1rem;
 }
 
-.mini-product-img {
-    width: 70px;
-    aspect-ratio: 3/4;
+.mini-product-row img{
+    width: 45%;
+    aspect-ratio: 3/3;
     object-fit: cover;
 }
 
@@ -968,32 +1023,107 @@ h1, h2, h3, h4 {
 
 .mini-product-info h4 {
     font-family: var(--font-serif);
-    font-size: 1.2rem;
+    font-size: 1.5rem; /* Larger title "Make It Pop" */
+    line-height: 1;
     margin-bottom: 0.2rem;
-    font-weight: 400; /* As per image looks slightly thinner elegance */
+    font-weight: 400;
+    color: #000;
 }
 
 .mini-product-info p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #666;
+    font-family: var(--font-sans);
 }
 
 .mini-product-link {
-    width: 40px;
-    height: 40px;
+    width: 44px; /* Slightly larger button */
+    height: 44px;
     border-radius: 50%;
-    background-color: #f0f0ed;
+    background-color: #f2f2f2; /* Light grey */
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.2s;
-    color: var(--text-color);
+    color: #333;
 }
 
-.mini-product-link:hover {
-    background-color: #e0e0dd;
+
+/* Inspiration Gallery Styles */
+.gallery-grid {
+    display: grid;
+    /* Use auto-fill with a smaller minmax to allow spans to work well, or keep 300px */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 250px; /* Fixed row height for consistency in masonry logic */
+    grid-auto-flow: dense; /* Crucial for packing */
+    gap: 1.5rem;
+    padding-bottom: 4rem;
 }
 
+.gallery-item {
+    overflow: hidden;
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    /* Reset aspect-ratio since we use grid rows/cols */
+}
+
+/* Span Classes */
+.gallery-item.wide {
+    grid-column: span 2;
+}
+
+.gallery-item.tall {
+    grid-row: span 2;
+}
+
+.gallery-item.big {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+
+.gallery-item:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    z-index: 1; /* Bring to front on hover */
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+/* Support for Shop Look Button inside Gallery Items */
+/* We use the shared .shop-look-btn class defined earlier. 
+   We just need to ensure the hover effect works for gallery items too. */
+
+.gallery-item:hover .shop-look-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mobile responsivenss for grid */
+@media (max-width: 600px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        grid-auto-rows: auto;
+    }
+    .gallery-item.wide, .gallery-item.tall, .gallery-item.big {
+        grid-column: auto;
+        grid-row: auto;
+        aspect-ratio: 1; /* Force square or intrinsic */
+    }
+}
+
+
+.getInspired {
+    max-width: 100%;
+    width: 88%;   
+}
 

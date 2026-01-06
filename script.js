@@ -143,19 +143,13 @@ function initCarousel(carousel) {
 
     const allItems = track.querySelectorAll('.carousel-item');
     
+    // Dynamic Responsive Width Calculation
+    // This allows the scroll distance to adapt to any screen size (%), 
+    // matching the CSS item width + gap exactly.
     const getWidth = () => {
-        const sectionId = carousel.closest('section')?.id;
-        
-        if (sectionId === 'recent' || sectionId === 'bestsellers') {
-            return 452;
-        }
-        if (sectionId === 'home-showcase') {
-            return 603;
-        }
-        
-        // Default dynamic calculation (e.g. for Styles section or others)
         const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
-        return (allItems[0]?.offsetWidth || 0) + gap;
+        const itemWidth = allItems[0]?.offsetWidth || 0;
+        return itemWidth + gap;
     }; 
     
     let currentIndex = 0;
@@ -322,7 +316,7 @@ const homeProductMap = {
     "Home Example 4": products[3]  // Typography
 };
 
-function openMiniModal(product) {
+function openMiniModal(product, triggerBtn) {
     // Populate Modal
     miniModalBody.innerHTML = `
         <div class="mini-product-row">
@@ -337,16 +331,36 @@ function openMiniModal(product) {
         </div>
     `;
 
-    miniModal.style.display = 'flex';
-    setTimeout(() => {
-        miniModal.classList.add('active');
-    }, 10);
+    // Move Modal to the Item Container (Sticky inside)
+    const itemContainer = triggerBtn.closest('.showcase-item, .gallery-item');
+    if (itemContainer) {
+        // Reset styles that might have been set previously
+        miniModal.style.display = 'none'; 
+        miniModal.classList.remove('active');
+        
+        // Append to item
+        itemContainer.appendChild(miniModal);
+        
+        // Display with flex (as defined in CSS for backdrop)
+        miniModal.style.display = 'flex';
+        
+        // Animate in
+        // Small delay to allow display:flex to apply before opacity transition
+        requestAnimationFrame(() => {
+            miniModal.classList.add('active');
+        });
+    }
 }
 
-function closeMiniModal() {
+function closeMiniModal(e) {
+    if (e) e.stopPropagation(); // prevent bubbling if clicking close button inside
+    
     miniModal.classList.remove('active');
     setTimeout(() => {
         miniModal.style.display = 'none';
+        // Optional: Move back to body or leave it? Leaving it is fine, it will move on next open.
+        // Moving back to body avoids it getting deleted if list re-renders (not happening here).
+        document.body.appendChild(miniModal); 
     }, 300);
 }
 
@@ -354,23 +368,33 @@ window.openMainModalFromMini = function(title) {
     const product = products.find(p => p.title === title);
     if (product) {
         closeMiniModal();
-        // Wait for mini modal to close slightly or immediately open main
-        setTimeout(() => openModal(product), 100);
+        setTimeout(() => openModal(product), 300);
     }
 }
 
 // Event Listeners for Shop Buttons
-// Since they are dynamic, attach to container
-document.querySelector('#home-showcase').addEventListener('click', (e) => {
+// Event Listeners for Shop Buttons (Global)
+document.addEventListener('click', (e) => {
+    // Check if clicked Shop Button
     if (e.target.closest('.shop-look-btn')) {
-        const item = e.target.closest('.showcase-item');
-        const imgAlt = item.querySelector('img').alt;
+        const btn = e.target.closest('.shop-look-btn');
+        // It could be in .showcase-item OR .gallery-item
+        const item = btn.closest('.showcase-item, .gallery-item');
         
-        // Find mapped product
-        const product = homeProductMap[imgAlt] || products[0]; // Fallback
-        
-        openMiniModal(product);
-        e.stopPropagation(); // Prevent bubbling if needed
+        if (item) {
+            const img = item.querySelector('img');
+            const imgAlt = img ? img.alt : "Product";
+            
+            // Find mapped product
+            // If checking from inspiration page, we might not have 'products' array fully or map.
+            // Assuming we use Home Product Map as dummy or random for now 
+            // OR we just pick a random one/first one.
+            const product = homeProductMap[imgAlt] || products[0]; // Fallback
+            
+            openMiniModal(product, btn);
+            e.stopPropagation(); 
+        }
+        return;
     }
 });
 

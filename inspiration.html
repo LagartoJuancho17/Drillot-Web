@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drillot We - Inspirate</title>
+    <meta
+      name="description"
+      content="Galería de inspiración con nuestros mejores diseños."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" style="position: relative; background-color: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.05);">
+      <div class="nav-container">
+        <a href="index.html" class="logo">Drillot We.</a>
+        <div class="nav-links">
+          <a href="index.html#recent">Diseños</a>
+          <a href="inspiration.html" class="active">Inspiración</a>
+          <a href="index.html#bestsellers">Populares</a>
+          <a href="index.html#contact">Contacto</a>
+        </div>
+        <div class="nav-icons">
+          <!-- Same icons as home -->
+           <button class="icon-btn search-btn" aria-label="Buscar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <button class="icon-btn cart-btn" aria-label="Carrito">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </button>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="section">
+        <div class="container getInspired">
+          <h1 class="section-title">Inspirate</h1>
+          
+          <div class="gallery-grid">
+            <!-- Varied Grid Layout (Masonry-style) -->
+            <div class="gallery-item big">
+                <img src="assets/images/getInspired/img1.jpg" alt="Inspiration 1" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item tall">
+                <img src="assets/images/getInspired/img2.jpg" alt="Inspiration 2" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item">
+                <img src="assets/images/getInspired/img3.webp" alt="Inspiration 3" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item wide">
+                <img src="assets/images/getInspired/img4.jpg" alt="Inspiration 4" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item">
+                <img src="assets/images/getInspired/img5.jpg" alt="Inspiration 5" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item tall">
+                <img src="assets/images/getInspired/img6.jpg" alt="Inspiration 6" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item">
+                <img src="assets/images/getInspired/img7.jpg" alt="Inspiration 7" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <div class="gallery-item wide">
+                <img src="assets/images/getInspired/img8.jpg" alt="Inspiration 8" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+            <!-- Additional images from folder -->
+             <div class="gallery-item">
+                <img src="assets/images/getInspired/img9.jpg" alt="Inspiration 9" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+             <div class="gallery-item big">
+                <img src="assets/images/getInspired/img10.webp" alt="Inspiration 10" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+             <div class="gallery-item tall">
+                <img src="assets/images/getInspired/img11.jpg" alt="Inspiration 11" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+             <div class="gallery-item">
+                <img src="assets/images/getInspired/img12.jpg" alt="Inspiration 12" loading="lazy">
+                <button class="shop-look-btn" aria-label="Shop">Shop</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 Drillot We. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    
+    <script src="script.js"></script> <!-- Reusing script for mobile menu if any, though most logic is specific to home. Might need minor tweak if script errors on missing elements. -->
+  </body>
+</html>

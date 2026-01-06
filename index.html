@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drillot We - Pósters Exclusivos</title>
+    <meta
+      name="description"
+      content="Galería de pósters de diseño exclusivo para tu hogar."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">Drillot We.</a>
+        <div class="nav-links">
+          <a href="#recent">Diseños</a>
+          <a href="#home-showcase">Inspiración</a>
+          <a href="#bestsellers">Populares</a>
+          <a href="#contact">Contacto</a>
+        </div>
+        <div class="nav-icons">
+          <button class="icon-btn search-btn" aria-label="Buscar">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <button class="icon-btn cart-btn" aria-label="Carrito">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
+              ></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </button>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="line">Arte que</span>
+          <span class="line">Transforma</span>
+          <span class="line">Tu Espacio</span>
+        </h1>
+        <p class="hero-subtitle">
+          Descubre nuestra colección curada de pósters minimalistas y
+          abstractos.
+        </p>
+        <a href="#recent" class="cta-button">Ver Colección</a>
+      </div>
+      <div class="hero-image-container">
+        <!-- Placeholder for hero image, will be styled with CSS or replaced -->
+        <div class="hero-image-overlay"></div>
+        <img
+          src="assets/images/hero/hero.jpg"
+          alt="Interior con cuadros"
+          class="hero-img"
+        />
+      </div>
+    </header>
+
+    <main>
+      <!-- Diseños Recientes -->
+      <section id="recent" class="section recent-designs">
+        <div class="container">
+          <h2 class="section-title">Diseños recientes</h2>
+          <div class="product-carousel" data-direction="left">
+            <button class="nav-arrow prev">←</button>
+            <div class="carousel-viewport">
+                <div class="carousel-track">
+                   <!-- Content loaded dynamically from script.js -->
+                </div>
+            </div>
+            <button class="nav-arrow next">→</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Diseños en tu hogar -->
+      <section id="home-showcase" class="section home-showcase">
+        <div class="container-fluid">
+          <h2 class="section-title">Diseños en tu hogar</h2>
+           <div class="product-carousel" data-direction="right">
+                 <button class="nav-arrow prev">←</button>
+                 <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <!-- Content loaded dynamically from script.js -->
+                    </div>
+                 </div>
+                 <button class="nav-arrow next">→</button>
+          </div>
+          <div class="center-btn">
+            <a href="#" class="btn-primary">Seguir viendo</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comentarios -->
+      <section class="section testimonials">
+        <div class="container">
+          <h2 class="section-title">Algunos de sus comentarios</h2>
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div class="t-image">
+                <img
+                  src="assets/images/testimonials/user1.jpg"
+                  alt="Review 1"
+                />
+              </div>
+              <div class="t-content">
+                <h4>Isla M.</h4>
+                <p>
+                  "There is so much variation in high quality paper! I've loved
+                  every surface I have worked on."
+                </p>
+                <span class="rating">★★★★★</span>
+                <span class="product-tag">Solapa</span>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="t-image">
+                <img
+                  src="assets/images/testimonials/user1.jpg"
+                  alt="Review 2"
+                />
+              </div>
+              <div class="t-content">
+                <h4>Eric W.</h4>
+                <p>"Great quality and fast shipping. The colors are vivid."</p>
+                <span class="rating">★★★★★</span>
+                <span class="product-tag">Solapa</span>
+              </div>
+            </div>
+            <div class="testimonial-card">
+              <div class="t-image">
+                <img
+                  src="assets/images/testimonials/user1.jpg"
+                  alt="Review 3"
+                />
+              </div>
+              <div class="t-content">
+                <h4>Alex D.</h4>
+                <p>
+                  "Minimalist perfection. Exactly what my living room needed."
+                </p>
+                <span class="rating">★★★★★</span>
+                <span class="product-tag">Solapa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mas Vendidos -->
+      <section id="bestsellers" class="section best-sellers">
+        <div class="container">
+          <h2 class="section-title">Más Vendidos</h2>
+          <div class="product-carousel" data-direction="left">
+            <button class="nav-arrow prev">←</button>
+            <div class="carousel-viewport">
+                <div class="carousel-track">
+                   <!-- Content loaded dynamically -->
+                </div>
+            </div>
+            <button class="nav-arrow next">→</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Estilo -->
+      <section id="styles-section" class="section styles">
+        <div class="container">
+          <div class="style-header">
+            <h2 class="section-title">Encontra tu estilo</h2>
+             <div class="nav-dots">
+            </div>
+          </div>
+          
+           <div class="product-carousel" data-direction="left">
+               <button class="nav-arrow prev">←</button>
+               <div class="carousel-viewport">
+                    <div class="carousel-track">
+                       <!-- Content loaded dynamically -->
+                    </div>
+               </div>
+               <button class="nav-arrow next">→</button>
+           </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2026 Drillot We. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

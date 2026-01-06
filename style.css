@@ -1,0 +1,579 @@
+/* 
+   Drillot We - Style Sheet
+   Premium / Minimalist Aesthetic
+*/
+
+:root {
+    --bg-color: #f9f9f7;
+    --text-color: #1a1a1a;
+    --accent-color: #0066cc;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+    --spacing-container: 1200px;
+    --spacing-section: 6rem;
+}
+
+/* Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+}
+
+.section-title {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+/* Utility */
+.container {
+    max-width: var(--spacing-container);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0;
+}
+
+.section {
+    padding: var(--spacing-section) 0;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: rgba(249, 249, 247, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+    max-width: var(--spacing-container);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    font-family: var(--font-serif);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0.25rem;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-color);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-top: 80px; 
+    overflow: hidden;
+}
+
+.hero-content {
+    padding: 0 4rem 0 10vw;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2.5rem;
+    max-width: 400px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background-color: var(--text-color);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.cta-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.hero-image-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Carousel System */
+.product-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 2rem;
+    width: fit-content;
+    will-change: transform;
+}
+
+.carousel-item {
+    flex-shrink: 0;
+    width: 280px; 
+}
+
+/* Specific Layouts: 4 items visible */
+#recent .carousel-item {
+    /* Wider items for 'Recent' */
+     width: calc((100% - 6rem) / 4);
+}
+
+#bestsellers .carousel-item {
+     width: calc((100% - 6rem) / 4);
+}
+
+/* Widen the containers for specific sections to make them "bigger" */
+#recent .container,
+#bestsellers .container,
+#styles-section .container {
+    max-width: 100vw; /* Much wider than standard 1200px */
+    padding: 0 4rem;
+}
+
+/* For recent, verify the item width calc allows for the new fluid width */
+/* The calc inherits the 100% from the fluid container, so items will grow. */
+
+/* Product Card */
+.product-card {
+    cursor: pointer;
+}
+
+.card-image {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background-color: #eee;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.product-card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-info {
+    text-align: center;
+}
+
+.card-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-serif);
+}
+
+.card-info .price {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.nav-arrow {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    z-index: 20;
+    position: absolute;
+    top: 40%; 
+    transform: translateY(-50%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.nav-arrow.prev {
+    left: -24px;
+}
+
+.nav-arrow.next {
+    right: -24px;
+}
+
+.nav-arrow:hover {
+    border-color: var(--text-color);
+    background-color: var(--text-color);
+    color: #fff;
+}
+
+/* Home Showcase Carousel Items */
+.home-showcase {
+    background-color: #f0f0ed;
+}
+
+#home-showcase .carousel-viewport {
+    /* Ensure padding references match container if needed, but viewport is usually 100% of parent */
+    width: 100%;
+}
+
+/* Add padding to the fluid container so arrows have space */
+#home-showcase .container-fluid {
+    padding: 0 4rem;
+    position: relative; /* Context for arrows if they were relative to container, but they are inside carousel. 
+                           Actually, arrows are in .product-carousel. */
+}
+
+/* Ensure the carousel itself has room if it's full width */
+#home-showcase .product-carousel {
+    max-width: 100vw;
+}
+
+.showcase-item {
+    position: relative;
+    overflow: hidden;
+    /* Formula for 3 items with 2rem gap: calc((100% - (2 * 2rem)) / 3) */
+    /* Note: JS uses offsetWidth + 32 (gap) for movement. */
+    width: calc((100% - 4rem) / 3); 
+    aspect-ratio: 4/5;
+}
+
+.showcase-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.shop-look-btn {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--text-color);
+    color: white;
+    cursor: pointer;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+}
+
+.showcase-item:hover .shop-look-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.center-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+/* Restore original button style for Home Showcase */
+/* Button override removed to unify styles */
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 30px;
+    background: var(--accent-color);
+    color: white;
+    font-weight: 600;
+}
+
+/* Testimonials - Grid (Not carousel for now unless requested, sticking to existing style) */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: #fff;
+    padding: 0;
+    border: 1px solid #eee;
+}
+
+.t-image {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+}
+
+.t-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.t-content {
+    padding: 1.5rem;
+}
+
+.t-content h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.t-content p {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 1rem;
+    min-height: 3em; 
+}
+
+.rating {
+    display: block;
+    color: var(--text-color);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Styles */
+.style-card {
+    position: relative;
+    overflow: hidden;
+    width: 350px;
+    aspect-ratio: 3/4;
+    display: block;
+}
+
+.style-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.style-card:hover img {
+    transform: scale(1.03);
+}
+
+.style-name {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-family: var(--font-serif);
+    color: white;
+    font-size: 3rem;
+    font-weight: 400;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.style-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+.footer {
+    padding: 3rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 80vh;
+        padding-top: 60px;
+    }
+    
+    .hero-content {
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        align-items: center;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 600px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .carousel-item {
+        width: 80vw;
+    }
+}

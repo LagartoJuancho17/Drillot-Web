@@ -229,6 +229,127 @@
       </div>
     </footer>
 
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <button class="close-modal-btn" aria-label="Close modal">×</button>
+            <div class="modal-body">
+                <!-- Left: Gallery -->
+                <div class="modal-gallery">
+                    <div class="main-image-container">
+                        <img src="assets/images/item/original.jpg" alt="Product Main" id="modal-main-image">
+                    </div>
+                    <div class="thumbnails-container">
+                        <img src="assets/images/item/original.jpg" class="modal-thumb active" onclick="switchModalImage(this)">
+                        <img src="assets/images/item/m1.jpg" class="modal-thumb" onclick="switchModalImage(this)">
+                        <img src="assets/images/item/m2.jpg" class="modal-thumb" onclick="switchModalImage(this)">
+                        <img src="assets/images/item/m3.png" class="modal-thumb" onclick="switchModalImage(this)">
+                        <img src="assets/images/item/m4.png" class="modal-thumb" onclick="switchModalImage(this)">
+                    </div>
+                </div>
+
+                <!-- Right: Info -->
+                <div class="modal-info">
+                    <h2 id="modal-product-title" class="modal-title">Product Title</h2>
+                    <p id="modal-product-price" class="modal-price">$300</p>
+                    
+                    <div class="modal-option">
+                        <label>Tamaño</label>
+                        <div class="size-selector">
+                           <!-- Simple buttons or select, user asked for options. Let's use a nice select or pill list. -->
+                           <!-- Using pills for better aesthetic -->
+                           <button class="option-btn active">A3</button>
+                           <button class="option-btn">A2</button>
+                           <button class="option-btn">70x100cm</button>
+                           <button class="option-btn">50x70cm</button>
+                           <button class="option-btn">A1</button>
+                        </div>
+                    </div>
+
+                    <div class="modal-option">
+                        <label>Cuadro</label>
+                        <select class="styled-select">
+                            <option>Sin cuadro</option>
+                            <option>Cuadro Blanco</option>
+                            <option>Oak</option>
+                            <option>Black</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-actions">
+                         <div class="qty-selector">
+                            <button>-</button>
+                            <input type="number" value="1" readonly>
+                            <button>+</button>
+                         </div>
+                         <button class="add-cart-btn-large">Agregar al carrito</button>
+                    </div>
+
+                    <!-- Accordions -->
+                    <div class="modal-accordions">
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                <span>Descripción</span>
+                                <span class="chevron">↓</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Póster de calidad museo en papel mate grueso y duradero. Cada póster está impreso en papel de archivo libre de ácido que produce impresiones brillantes para alegrar cualquier habitación.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                <span>Print y Frame</span>
+                                <span class="chevron">↓</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Marcos de madera de aliso semidura procedente de bosques renovables. Protector frontal de acrilita ligero.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">
+                                <span>Shipping and returns</span>
+                                <span class="chevron">↓</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p>Envíos a todo el mundo. Devoluciones aceptadas dentro de los 30 días posteriores a la recepción.</p>
+                            </div>
+                        </div>
+                         <div class="accordion-item">
+                            <button class="accordion-header">
+                                <span>Size Guide</span>
+                                <span class="chevron">↓</span>
+                            </button>
+                            <div class="accordion-content">
+                                <p>A3: 29.7 x 42 cm<br>A2: 42 x 59.4 cm<br>A1: 59.4 x 84.1 cm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Look Mini Modal -->
+    <div id="shop-look-modal" class="mini-modal-backdrop">
+        <div class="mini-modal-content">
+            <div class="mini-modal-header">
+                <h3>Diseños encontrados</h3>
+                <button class="close-mini-modal-btn" aria-label="Close">×</button>
+            </div>
+            <div class="mini-modal-body">
+                <!-- Dynamic Content -->
+                <div class="mini-product-row">
+                    <img src="assets/images/recent/poster1.jpg" alt="Product" class="mini-product-img">
+                    <div class="mini-product-info">
+                        <h4>Make It Pop</h4>
+                        <p>Desde $300</p>
+                    </div>
+                    <button class="mini-product-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>

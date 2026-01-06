@@ -43,10 +43,10 @@ heroTimeline.from(".hero-title .line", {
 // --- Data Objects ---
 
 const products = [
-    { title: "Make It Pop", price: "Desde $300", img: "assets/images/recent/poster1.jpg" },
-    { title: "Abstract Blue", price: "Desde $300", img: "assets/images/recent/poster2.jpg" },
-    { title: "Red Burst", price: "Desde $300", img: "assets/images/recent/poster3.jpg" },
-    { title: "Typography No.1", price: "Desde $320", img: "assets/images/recent/poster4.jpg" },
+    { title: "Make It Pop", price: "Desde $300", img: "assets/images/recent/poster1.jpg", hoverImg: "assets/images/recent/poster1hover.jpg" },
+    { title: "Abstract Blue", price: "Desde $300", img: "assets/images/recent/poster2.jpg", hoverImg: "assets/images/recent/poster2hover.jpg" },
+    { title: "Red Burst", price: "Desde $300", img: "assets/images/recent/poster3.jpg", hoverImg: "assets/images/recent/poster3hover.jpg" },
+    { title: "Typography No.1", price: "Desde $320", img: "assets/images/recent/poster4.jpg", hoverImg: "assets/images/recent/poster4hover.jpg" },
 ];
 
 const homeShowcase = [
@@ -64,10 +64,11 @@ const bestSellers = [
 ];
 
 const styles = [
-    { name: "Tipografía", img: "assets/images/styles/typography.jpg" },
+    { name: "Tipografía", img: "assets/images/styles/typography.webp" },
     { name: "Minimalista", img: "assets/images/styles/minimalist.jpg" },
     { name: "Abstracto", img: "assets/images/styles/abstract.jpg" },
-      { name: "Tipografía", img: "assets/images/styles/typography.jpg" }
+    { name: "Lettering", img: "assets/images/styles/lettering.jpg" },
+    { name: "Organic", img: "assets/images/styles/organic.jpg" }
 ];
 
 // --- Dynamic Rendering ---
@@ -76,7 +77,8 @@ function renderProduct(product) {
     return `
         <article class="product-card carousel-item">
             <div class="card-image">
-                <img src="${product.img}" alt="${product.title}">
+                <img src="${product.img}" alt="${product.title}" class="main-img">
+                ${product.hoverImg ? `<img src="${product.hoverImg}" alt="${product.title} Hover" class="hover-img">` : ''}
             </div>
             <div class="card-info">
                 <h3>${product.title}</h3>
@@ -140,7 +142,21 @@ function initCarousel(carousel) {
     }
 
     const allItems = track.querySelectorAll('.carousel-item');
-    const getWidth = () => allItems[0].offsetWidth + 32; 
+    
+    const getWidth = () => {
+        const sectionId = carousel.closest('section')?.id;
+        
+        if (sectionId === 'recent' || sectionId === 'bestsellers') {
+            return 452;
+        }
+        if (sectionId === 'home-showcase') {
+            return 603;
+        }
+        
+        // Default dynamic calculation (e.g. for Styles section or others)
+        const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
+        return (allItems[0]?.offsetWidth || 0) + gap;
+    }; 
     
     let currentIndex = 0;
     let isAnimating = false;
@@ -154,7 +170,7 @@ function initCarousel(carousel) {
             currentIndex++;
             gsap.to(track, {
                 x: -currentIndex * width,
-                duration: 0.5,
+                duration: 0.75,
                 ease: "power2.inOut",
                 onComplete: () => {
                     if (currentIndex >= items.length) {
@@ -172,7 +188,7 @@ function initCarousel(carousel) {
             currentIndex--;
             gsap.to(track, {
                 x: -currentIndex * width,
-                duration: 0.5,
+                duration: 0.75,
                 ease: "power2.inOut",
                 onComplete: () => {
                     isAnimating = false;
@@ -202,3 +218,165 @@ gsap.utils.toArray('.section-title').forEach(title => {
         ease: "power3.out"
     });
 });
+
+
+// --- Product Modal Logic ---
+
+const modal = document.querySelector('#product-modal');
+const closeModalBtn = document.querySelector('.close-modal-btn');
+const modalMainImg = document.querySelector('#modal-main-image');
+const modalTitle = document.querySelector('#modal-product-title');
+const modalPrice = document.querySelector('#modal-product-price');
+const modalThumbs = document.querySelectorAll('.modal-thumb');
+const accordions = document.querySelectorAll('.accordion-header');
+const sizeBtns = document.querySelectorAll('.size-selector .option-btn');
+
+// Open Modal
+function openModal(product) {
+    modalTitle.textContent = product.title;
+    modalPrice.textContent = product.price; // Or specific price
+    
+    // Reset images to standard set for demo (or use product specific if available)
+    // Using the 'items' folder content as requested for ALL recent items for this demo
+    // Ideally you'd map these per product.
+    modalMainImg.src = "assets/images/item/original.jpg";
+    
+    // Reset thumbs active state
+    modalThumbs.forEach(t => t.classList.remove('active'));
+    modalThumbs[0].classList.add('active');
+
+    // Show modal
+    modal.style.display = 'flex';
+    // Small delay to allow display flex to apply before opacity transition
+    setTimeout(() => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }, 10);
+}
+
+// Close Modal
+function closeModal() {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+// Event Listeners
+closeModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
+
+// Attach Click to "Recent" Products
+// Since they are dynamic, we use delegation or re-attach. 
+// We already have render logic. Let's attach to the container #recent
+const recentSection = document.querySelector('#recent');
+recentSection.addEventListener('click', (e) => {
+    const card = e.target.closest('.product-card');
+    if (card) {
+        // Find product data - simplistic way: match title
+        const title = card.querySelector('h3').textContent;
+        const product = products.find(p => p.title === title) || { title: title, price: card.querySelector('.price').textContent };
+        openModal(product);
+    }
+});
+
+// Gallery Switcher (Global function for onclick in HTML, or addEventListener here)
+// Defined globally or attached:
+window.switchModalImage = function(thumb) {
+    modalMainImg.src = thumb.src;
+    modalThumbs.forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+};
+
+// Accordions
+accordions.forEach(header => {
+    header.addEventListener('click', () => {
+        const item = header.parentElement;
+        // Close others? Optional. Let's keep others open for now or toggle.
+        item.classList.toggle('active');
+    });
+});
+
+// Size selection
+sizeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        sizeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+// --- Mini Modal Logic (Shop Look) ---
+
+const miniModal = document.querySelector('#shop-look-modal');
+const closeMiniModalBtn = document.querySelector('.close-mini-modal-btn');
+const miniModalBody = document.querySelector('.mini-modal-body');
+
+// Sample Data Mapping (mocking real connections)
+const homeProductMap = {
+    "Home Example 1": products[0], // Make It Pop
+    "Home Example 2": products[1], // Abstract Blue
+    "Home Example 3": products[2], // Red Burst
+    "Home Example 4": products[3]  // Typography
+};
+
+function openMiniModal(product) {
+    // Populate Modal
+    miniModalBody.innerHTML = `
+        <div class="mini-product-row">
+            <img src="${product.img}" alt="${product.title}" class="mini-product-img">
+            <div class="mini-product-info">
+                <h4>${product.title}</h4>
+                <p>${product.price}</p>
+            </div>
+            <button class="mini-product-link" onclick="openMainModalFromMini('${product.title}')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    `;
+
+    miniModal.style.display = 'flex';
+    setTimeout(() => {
+        miniModal.classList.add('active');
+    }, 10);
+}
+
+function closeMiniModal() {
+    miniModal.classList.remove('active');
+    setTimeout(() => {
+        miniModal.style.display = 'none';
+    }, 300);
+}
+
+window.openMainModalFromMini = function(title) {
+    const product = products.find(p => p.title === title);
+    if (product) {
+        closeMiniModal();
+        // Wait for mini modal to close slightly or immediately open main
+        setTimeout(() => openModal(product), 100);
+    }
+}
+
+// Event Listeners for Shop Buttons
+// Since they are dynamic, attach to container
+document.querySelector('#home-showcase').addEventListener('click', (e) => {
+    if (e.target.closest('.shop-look-btn')) {
+        const item = e.target.closest('.showcase-item');
+        const imgAlt = item.querySelector('img').alt;
+        
+        // Find mapped product
+        const product = homeProductMap[imgAlt] || products[0]; // Fallback
+        
+        openMiniModal(product);
+        e.stopPropagation(); // Prevent bubbling if needed
+    }
+});
+
+closeMiniModalBtn.addEventListener('click', closeMiniModal);
+miniModal.addEventListener('click', (e) => {
+    if (e.target === miniModal) closeMiniModal();
+});
+
+

@@ -4,7 +4,7 @@
 */
 
 :root {
-    --bg-color: #f9f9f7;
+    --bg-color: #fffff;
     --text-color: #1a1a1a;
     --accent-color: #0066cc;
     --font-serif: 'Playfair Display', serif;
@@ -298,6 +298,19 @@ h1, h2, h3, h4 {
     transition: transform 0.6s ease;
 }
 
+.card-image .hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.6s ease;
+    z-index: 2;
+}
+
+.product-card:hover .card-image .hover-img {
+    opacity: 1;
+}
+
 .product-card:hover .card-image img {
     transform: scale(1.05);
 }
@@ -489,9 +502,10 @@ h1, h2, h3, h4 {
 .style-card {
     position: relative;
     overflow: hidden;
-    width: 350px;
-    aspect-ratio: 3/4;
+    width: 600px;
+    height: 500px;
     display: block;
+    flex-shrink: 0;
 }
 
 .style-card img {
@@ -576,4 +590,410 @@ h1, h2, h3, h4 {
     .carousel-item {
         width: 80vw;
     }
+
+    .modal-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-gallery {
+        margin-bottom: 2rem;
+    }
 }
+
+/* Modal Styles */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.modal-backdrop.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 1000px;
+    height: auto;
+    max-height: 95vh;
+    border-radius: 4px;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden; /* Hide main scrollbar */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-backdrop.active .modal-content {
+    transform: translateY(0);
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    color: var(--text-color);
+    z-index: 10;
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Modal Gallery */
+.modal-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.main-image-container {
+    width: 100%;
+    height: 60vh; /* Constrain height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.main-image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain; /* Ensure full image is visible without scrolling */
+}
+
+.thumbnails-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.modal-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 1px solid transparent; 
+    opacity: 0.6;
+    transition: opacity 0.2s, border-color 0.2s;
+}
+
+.modal-thumb:hover, .modal-thumb.active {
+    opacity: 1;
+    border: 1px solid var(--text-color);
+}
+
+/* Modal Info */
+.modal-info {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Scroll info only if strictly necessary */
+    padding-right: 0.5rem;
+}
+
+.modal-info::-webkit-scrollbar {
+    width: 4px;
+}
+.modal-info::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-serif);
+    line-height: 1;
+}
+
+.modal-price {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.modal-option {
+    margin-bottom: 1rem;
+}
+
+.modal-option label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.size-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.option-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+}
+
+.option-btn:hover, .option-btn.active {
+    border-color: var(--text-color);
+    background-color: var(--text-color);
+    color: white;
+}
+
+.styled-select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.qty-selector {
+    display: flex;
+    border: 1px solid #ddd;
+    align-items: center;
+    height: 40px;
+}
+
+.qty-selector button {
+    background: none;
+    border: none;
+    width: 30px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.qty-selector input {
+    width: 35px;
+    border: none;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    -moz-appearance: textfield;
+}
+
+.qty-selector input::-webkit-outer-spin-button,
+.qty-selector input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-cart-btn-large {
+    flex-grow: 1;
+    background-color: var(--text-color);
+    color: white;
+    border: none;
+    padding: 0; /* Let flex/height handle it or set specific padding */
+    height: 40px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 0.9rem;
+}
+
+.add-cart-btn-large:hover {
+    background-color: var(--accent-color);
+}
+
+/* Accordions */
+.modal-accordions {
+    border-top: 1px solid #eee;
+    margin-top: auto; /* Push to bottom if space permits */
+}
+
+.accordion-item {
+    border-bottom: 1px solid #eee;
+}
+
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    text-align: left;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content p {
+    padding-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 150px;
+}
+
+
+/* Mini Modal Styles (Shop Look) */
+.mini-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 2001; /* Higher than main modal just in case, or same level */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mini-modal-backdrop.active {
+    display: flex;
+    opacity: 1;
+}
+
+.mini-modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 4px;
+    padding: 1.5rem 0; /* Vertical padding */
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.mini-modal-backdrop.active .mini-modal-content {
+    transform: translateY(0);
+}
+
+.mini-modal-header {
+    padding: 0 1.5rem 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.mini-modal-header h3 {
+    font-size: 1.1rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    margin: 0;
+}
+
+.close-mini-modal-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    color: #999;
+}
+
+.mini-modal-body {
+    padding: 1rem 1.5rem 0 1.5rem;
+}
+
+.mini-product-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mini-product-img {
+    width: 70px;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+}
+
+.mini-product-info {
+    flex-grow: 1;
+}
+
+.mini-product-info h4 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+    font-weight: 400; /* As per image looks slightly thinner elegance */
+}
+
+.mini-product-info p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.mini-product-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0ed;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: var(--text-color);
+}
+
+.mini-product-link:hover {
+    background-color: #e0e0dd;
+}
+
+

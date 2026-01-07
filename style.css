@@ -71,7 +71,7 @@
     --font-serif: 'Thunder', sans-serif;
     --font-sans: 'Thunder', sans-serif;
     --spacing-container: 1200px;
-    --spacing-section: 6rem;
+    --spacing-section: 4rem;
 }
 
 /* Reset */
@@ -115,7 +115,9 @@ h1, h2, h3, h4 {
     font-weight: 900;
     text-transform: uppercase;
     font-size: 5rem;
+    line-height: normal;
     margin-bottom: 1rem;
+    margin-top: 2rem;
     text-align: center;
     letter-spacing: 1px;
 }
@@ -183,7 +185,7 @@ main {
 }
 
 .nav-links a {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -435,6 +437,10 @@ main {
     font-weight: 900;
 }
 
+.hero-title .char {
+    display: inline-block;
+}
+
 .hero-subtitle {
     font-size: 2rem;
     line-height: 1.2;
@@ -533,6 +539,10 @@ main {
 }
 
 .product-carousel .nav-arrow{
+    top: 40%;
+}
+
+.product-carousel-nav .nav-arrow{
     top: 50%;
 }
 
@@ -856,8 +866,91 @@ main {
     }
     
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 5.5rem;
         align-items: center;
+        z-index: 3; /* Ensure text is above image */
+        color: white;
+        letter-spacing: 2px;
+    }
+    
+    /* Make hero image container the background */
+    .hero-image-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .hero-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+        z-index: 2; /* Between image and content (content is z-index 2 in hero-content, need adjusting) */
+    }
+
+    /* Wait, hero-content is z-index 2. hero-image-container is z-index 1. 
+       Inside hero-image-container we have .hero-image-overlay. 
+       So overlay is inside container. 
+       If container is z-index 1, overlay is inside it. 
+       hero-content is sibling of hero-image-container (in HTML usually?).
+       Let's check HTML structure again to be sure.
+       HTML: 
+       <div class="hero-content">...</div>
+       <div class="hero-image-container">
+          <div class="hero-image-overlay"></div>
+          ... images ...
+       </div>
+       
+       CSS currently:
+       .hero-content { z-index: 2; }
+       .hero-image-container { z-index: 1; }
+       
+       So overlay needs to be ON TOP of images but BELOW content.
+       Images are absolute inside container.
+       Overlay is absolute inside container.
+       
+       We need to make sure overlay is z-index higher than images.
+       Images use defaults probably or we can set them.
+       
+       Actually, I'll just add the overlay style here.
+    */
+    
+    .hero-image-overlay {
+        background: rgba(0,0,0,0.4); /* Darkens the background image */
+        z-index: 2; /* Above images (which are default z-index or need to be lower) */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .hero-content {
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 2; /* Content above image */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Take full height to center */
+    }
+    
+    .hero-subtitle {
+        color: rgba(255,255,255,0.9);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Move indicators up a bit if needed */
+    .hero-indicators {
+        bottom: 6rem;
+        z-index: 4;
     }
     
     .testimonials-grid {
@@ -1036,7 +1129,7 @@ main {
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 4.5rem;
     }
     
     .carousel-item {
@@ -1603,7 +1696,7 @@ main {
 
 /* Category Hero */
 .cat-hero-section {
-    padding: 10rem 0 4rem; /* Top padding for fixed nav */
+    padding: 3rem 0 3rem; /* Top padding for fixed nav */
     background-color: #fff;
 }
 
@@ -1616,9 +1709,10 @@ main {
 
 .cat-hero-image img {
     width: 100%;
-    height: 400px;
+    height: 600px;
     object-fit: cover;
     border-radius: 2px;
+    object-position: top;
 }
 
 .cat-hero-content {
@@ -1627,17 +1721,19 @@ main {
 
 .cat-title {
     font-family: var(--font-serif);
-    font-size: 3.5rem;
+    font-size: 5.5rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
     line-height: 1.1;
+    text-transform: uppercase;
 }
 
 .cat-description {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #555;
     line-height: 1.6;
     max-width: 400px;
+    line-height: normal;
 }
 
 /* Filter Bar */

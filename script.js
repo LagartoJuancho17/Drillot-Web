@@ -105,11 +105,30 @@ function initAnimations() {
 
         // Hero Animation
         if (document.querySelector('.hero')) {
+             // Split text into characters
+             const heroLines = document.querySelectorAll('.hero-title .line');
+             heroLines.forEach(line => {
+                 const text = line.textContent; // Use textContent to get raw text
+                 line.innerHTML = text.split('').map(char => {
+                     // Preserve spaces visually, though inline-block handles them usually, &nbsp; makes it safer for width
+                     if (char === ' ') return '<span class="char">&nbsp;</span>';
+                     return `<span class="char">${char}</span>`;
+                 }).join('');
+             });
+
              const heroTimeline = gsap.timeline();
-             heroTimeline.from(".hero-title .line", { y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "power4.out" })
+             heroTimeline.from(".hero-title .char", { 
+                 y: 100, 
+                 opacity: 0, 
+                 duration: 0.7, 
+                 stagger: 0.03, // Faster stagger for characters
+                 ease: "power4.out" 
+             })
              .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.5")
              .from(".cta-button", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
              .from(".hero-image-container", { scale: 1.1, opacity: 0, duration: 1.5, ease: "power2.out" }, "-=1.5");
+             
+
              
              // Hero Carousel Logic
              const heroImages = document.querySelectorAll('.hero-img');
@@ -155,6 +174,23 @@ function initAnimations() {
                  });
              }
         }
+
+        // Carousel Animations
+        gsap.utils.toArray('.carousel-track').forEach(track => {
+            gsap.from(track.children, {
+                scrollTrigger: {
+                    trigger: track,
+                    start: "top 85%", // Start when top of track hits 85% of viewport height
+                    toggleActions: "play none none reverse"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+        });
+
 
         
         // ... ScrollTrigger animations would go here if any remain active ...

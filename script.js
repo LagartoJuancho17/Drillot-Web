@@ -1,47 +1,168 @@
-// GSAP Registration
-gsap.registerPlugin(ScrollTrigger);
+// Core Navigation Logic (Runs first)
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Mobile Menu Logic
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-// Navbar Scroll Effect
-const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+             // ... logic ...
+             const isOpen = navLinks.classList.contains('active');
+             mobileMenuBtn.classList.toggle('active');
+             navLinks.classList.toggle('active');
+             
+             // Icon Toggle
+             const icon = mobileMenuBtn.querySelector('i');
+             if (icon) {
+                 if (isOpen) {
+                     icon.classList.remove('fa-xmark');
+                     icon.classList.add('fa-bars');
+                 } else {
+                     icon.classList.remove('fa-bars');
+                     icon.classList.add('fa-xmark');
+                 }
+             }
+             document.body.style.overflow = isOpen ? '' : 'hidden'; 
+        });
+
+        // Close when clicking link
+        navLinks.querySelectorAll('a').forEach(link => {
+            // Check if it's NOT a dropdown trigger
+            if (!link.classList.contains('dropdown-trigger')) {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    document.body.style.overflow = '';
+                     const icon = mobileMenuBtn.querySelector('i');
+                     if (icon) {
+                         icon.classList.remove('fa-xmark');
+                         icon.classList.add('fa-bars');
+                     }
+                });
+            }
+        });
     }
+
+    // Dropdown Logic
+    const dropdowns = document.querySelectorAll('.nav-item.dropdown');
+    dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.dropdown-trigger');
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                // Close others
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                
+                dropdown.classList.toggle('active');
+
+                // Handle sibling visibility in mobile
+                if (window.innerWidth <= 768) { // Assuming mobile breakpoint
+                     const navLinks = document.querySelector('.nav-links');
+                     if (navLinks) {
+                         if (dropdown.classList.contains('active')) {
+                             navLinks.classList.add('menu-expanded');
+                         } else {
+                             navLinks.classList.remove('menu-expanded');
+                         }
+                     }
+                }
+            });
+        }
+    });
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+
+    // Navbar Scroll Effect
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+
+    // Initialize Animations (GSAP)
+    initAnimations();
 });
 
-// Hero Animation
-// Hero Animation
-if (document.querySelector('.hero')) {
-    const heroTimeline = gsap.timeline();
 
-    heroTimeline.from(".hero-title .line", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power4.out"
-    })
-    .from(".hero-subtitle", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "-=0.5")
-    .from(".cta-button", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "-=0.6")
-    .from(".hero-image-container", {
-        scale: 1.1,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power2.out"
-    }, "-=1.5");
+function initAnimations() {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+
+        // Hero Animation
+        if (document.querySelector('.hero')) {
+             const heroTimeline = gsap.timeline();
+             heroTimeline.from(".hero-title .line", { y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "power4.out" })
+             .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.5")
+             .from(".cta-button", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+             .from(".hero-image-container", { scale: 1.1, opacity: 0, duration: 1.5, ease: "power2.out" }, "-=1.5");
+             
+             // Hero Carousel Logic
+             const heroImages = document.querySelectorAll('.hero-img');
+             const heroDots = document.querySelectorAll('.hero-dot');
+             let currentHeroIndex = 0;
+             
+             if (heroImages.length > 0) {
+                 const rotateHero = () => {
+                     // Remove active
+                     heroImages[currentHeroIndex].classList.remove('active');
+                     if(heroDots[currentHeroIndex]) heroDots[currentHeroIndex].classList.remove('active');
+                     
+                     // Next index
+                     currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+                     
+                     // Add active
+                     heroImages[currentHeroIndex].classList.add('active');
+                     if(heroDots[currentHeroIndex]) heroDots[currentHeroIndex].classList.add('active');
+                 };
+                 
+                 // Auto rotate every 5 seconds
+                 let heroInterval = setInterval(rotateHero, 5000);
+                 
+                 // Manual Click
+                 heroDots.forEach((dot, index) => {
+                     dot.addEventListener('click', () => {
+                         clearInterval(heroInterval);
+                         
+                         // Remove active
+                         heroImages[currentHeroIndex].classList.remove('active');
+                         if(heroDots[currentHeroIndex]) heroDots[currentHeroIndex].classList.remove('active');
+                         
+                         // Set index
+                         currentHeroIndex = index;
+                         
+                         // Add active
+                         heroImages[currentHeroIndex].classList.add('active');
+                         if(heroDots[currentHeroIndex]) heroDots[currentHeroIndex].classList.add('active');
+                         
+                         // Restart interval
+                         heroInterval = setInterval(rotateHero, 5000);
+                     });
+                 });
+             }
+        }
+
+        
+        // ... ScrollTrigger animations would go here if any remain active ...
+    } else {
+        console.warn('GSAP not loaded');
+    }
 }
+
 
 // --- Data Objects ---
 
@@ -67,11 +188,11 @@ const bestSellers = [
 ];
 
 const styles = [
-    { name: "Tipografía", img: "assets/images/styles/typography.webp" },
-    { name: "Minimalista", img: "assets/images/styles/minimalist.jpg" },
-    { name: "Abstracto", img: "assets/images/styles/abstract.jpg" },
-    { name: "Lettering", img: "assets/images/styles/lettering.jpg" },
-    { name: "Organic", img: "assets/images/styles/organic.jpg" }
+    { name: "TIPOGRAFIA", img: "assets/images/styles/typography.webp" },
+    { name: "MINIMALISTA", img: "assets/images/styles/minimalist.jpg" },
+    { name: "ABSTRACTO", img: "assets/images/styles/abstract.jpg" },
+    { name: "LETTERING", img: "assets/images/styles/lettering.jpg" },
+    { name: "ORGANIC", img: "assets/images/styles/organic.jpg" }
 ];
 
 // --- Dynamic Rendering ---
@@ -303,7 +424,7 @@ function openModal(product) {
     if (images.length > 1) {
         const prevBtn = document.createElement('button');
         prevBtn.className = 'modal-nav-btn prev';
-        prevBtn.innerHTML = '&#10094;'; // Left Arrow
+        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>'; // Left Arrow
         prevBtn.onclick = (e) => {
             e.stopPropagation();
             currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -312,7 +433,7 @@ function openModal(product) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'modal-nav-btn next';
-        nextBtn.innerHTML = '&#10095;'; // Right Arrow
+        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>'; // Right Arrow
         nextBtn.onclick = (e) => {
              e.stopPropagation();
              currentIndex = (currentIndex + 1) % images.length;
@@ -415,7 +536,7 @@ function openMiniModal(product, triggerBtn) {
                 <p>${product.price}</p>
             </div>
             <button class="mini-product-link" onclick="openMainModalFromMini('${product.title}')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
     `;

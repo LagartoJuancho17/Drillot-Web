@@ -8,14 +8,14 @@
       name="description"
       content="Colección Minimalista de pósters de diseño exclusivo."
     />
+    
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts -->
+    <!-- Local Fonts (Thunder) included via style.css -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
@@ -27,7 +27,7 @@
         <a href="index.html" class="logo">Drillot We.</a>
         <div class="nav-links">
           <div class="nav-item dropdown">
-            <a href="#" class="dropdown-trigger">Shop</a>
+            <a href="javascript:void(0)" class="dropdown-trigger">Shop <i class="fa-solid fa-chevron-down"></i></a>
             <div class="dropdown-menu">
                 <div class="dropdown-content">
                     <div class="dropdown-column">
@@ -63,37 +63,14 @@
         </div>
         <div class="nav-icons">
           <button class="icon-btn search-btn" aria-label="Buscar">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
           <button class="icon-btn cart-btn" aria-label="Carrito">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"
-              ></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
+            <i class="fa-solid fa-cart-shopping"></i>
           </button>
         </div>
         <button class="mobile-menu-btn" aria-label="Menu">
-          <span></span><span></span>
+          <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </nav>
@@ -120,7 +97,7 @@
         <div class="filter-bar">
             <div class="container">
                 <div class="filter-left">
-                     <button class="filter-btn">Filter <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                     <button class="filter-btn">Filter <i class="fa-solid fa-chevron-down"></i></button>
                 </div>
                 
                 <div class="filter-right">
@@ -167,7 +144,7 @@
     <!-- Product Modal -->
     <div id="product-modal" class="modal-backdrop">
         <div class="modal-content">
-            <button class="close-modal-btn" aria-label="Close modal">×</button>
+            <button class="close-modal-btn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-body">
                 <!-- Left: Gallery -->
                 <div class="modal-gallery">
@@ -224,14 +201,8 @@
                             <button class="accordion-header">
                                 <span>Descripción</span>
                             <div class="accordion-icon">
-                                <svg class="icon-plus" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <svg class="icon-close" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
+                                <i class="fa-solid fa-plus icon-plus"></i>
+                                <i class="fa-solid fa-minus icon-close"></i>
                             </div>
                             </button>
                             <div class="accordion-content">
@@ -242,14 +213,8 @@
                             <button class="accordion-header">
                                 <span>Print y Frame</span>
                             <div class="accordion-icon">
-                                <svg class="icon-plus" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <svg class="icon-close" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
+                                <i class="fa-solid fa-plus icon-plus"></i>
+                                <i class="fa-solid fa-minus icon-close"></i>
                             </div>
                             </button>
                             <div class="accordion-content">
@@ -260,14 +225,8 @@
                             <button class="accordion-header">
                                 <span>Shipping and returns</span>
                             <div class="accordion-icon">
-                                <svg class="icon-plus" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <svg class="icon-close" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
+                                <i class="fa-solid fa-plus icon-plus"></i>
+                                <i class="fa-solid fa-minus icon-close"></i>
                             </div>
                             </button>
                             <div class="accordion-content">
@@ -278,14 +237,8 @@
                             <button class="accordion-header">
                                 <span>Size Guide</span>
                             <div class="accordion-icon">
-                                <svg class="icon-plus" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                <svg class="icon-close" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
+                                <i class="fa-solid fa-plus icon-plus"></i>
+                                <i class="fa-solid fa-minus icon-close"></i>
                             </div>
                             </button>
                             <div class="accordion-content">
@@ -304,5 +257,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
     <script src="category-minimalist.js"></script>
+
   </body>
 </html>

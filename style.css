@@ -53,6 +53,7 @@
 }
 
 :root {
+    --secondary-bg-color: #f0f0ed;
     --bg-color: #fffff;
     --text-color: #1a1a1a;
     --accent-color: #0066cc;
@@ -116,7 +117,7 @@ h1, h2, h3, h4 {
     text-transform: uppercase;
     font-size: 5rem;
     line-height: normal;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     margin-top: 2rem;
     text-align: center;
     letter-spacing: 1px;
@@ -220,6 +221,7 @@ main {
     flex-direction: column;
     gap: 6px;
     cursor: pointer;
+    color: var(--text-color); /* Ensure dark color by default */
 }
 
 /* Mobile Menu Button Spans (Removed) */
@@ -574,6 +576,20 @@ main {
      width: calc((100% - 6rem) / 4);
 }
 
+#styles-section .carousel-item {
+    width: calc((100% - 6rem) / 2);
+}
+
+@media (max-width: 768px) {
+    #styles-section .carousel-item {
+        width: calc((100% - 6rem) / 1);
+    }
+}
+
+#styles-section {
+    background: var(--secondary-bg-color);
+}
+
 /* Widen the containers for specific sections to make them "bigger" */
 #recent .container,
 #bestsellers .container,
@@ -670,7 +686,7 @@ main {
 
 /* Home Showcase Carousel Items */
 .home-showcase {
-    background-color: #f0f0ed;
+    background-color: var(--secondary-bg-color);
 }
 
 #home-showcase .carousel-viewport {
@@ -831,7 +847,7 @@ main {
     left: 2rem;
     font-family: var(--font-serif);
     color: white;
-    font-size: 3rem;
+    font-size: 5rem;
     font-weight: 700;
     letter-spacing: 2px;
 }
@@ -859,6 +875,48 @@ main {
         min-height: 80vh;
         padding-top: 60px;
     }
+
+    /* Default Mobile Navbar (White bg, dark text) for inner pages */
+    .navbar {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1rem 0;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .navbar .logo,
+    .mobile-menu-btn,
+    .nav-icons .icon-btn {
+        color: var(--text-color) !important;
+        transition: color 0.3s ease;
+    }
+
+    /* Home Page Specific Mobile Navbar (Transparent initial, white text) */
+    body.home-page .navbar {
+        background-color: transparent;
+        box-shadow: none;
+    }
+    
+    body.home-page .navbar .logo,
+    body.home-page .mobile-menu-btn,
+    body.home-page .nav-icons .icon-btn {
+        color: #fff;
+    }
+
+    /* Scrolled State for Home Page (Becomes like default) */
+    body.home-page .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    body.home-page .navbar.scrolled .logo,
+    body.home-page .navbar.scrolled .mobile-menu-btn,
+    body.home-page .navbar.scrolled .nav-icons .icon-btn {
+        color: var(--text-color) !important;
+    }
+
+    /* Mobile Menu Button Base Styles */
+
     
     .hero-content {
         padding: 4rem 2rem;
@@ -944,7 +1002,7 @@ main {
     
     .hero-subtitle {
         color: rgba(255,255,255,0.9);
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        
     }
 
     /* Move indicators up a bit if needed */
@@ -962,8 +1020,15 @@ main {
         display: flex;
         font-size: 1.5rem;
         z-index: 1002;
-        color: var(--text-color);
-        transition: transform 0.3s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #fff !important; /* Force white initially */
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .navbar.scrolled .mobile-menu-btn {
+        color: var(--text-color) !important; /* Force dark on scroll */
     }
 
     .mobile-menu-btn.active {
@@ -1051,6 +1116,18 @@ main {
         align-items: center;
     }
 
+
+        .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        z-index: 1002;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-color) !important; /* Force dark default for all pages */
+    }
     .nav-item.dropdown .dropdown-menu,
     .nav-item.dropdown:hover .dropdown-menu {
         position: static;
@@ -1285,14 +1362,14 @@ main {
 }
 
 .modal-title {
-    font-size: 1.8rem;
+    font-size: 3rem;
     margin-bottom: 0.25rem;
     font-family: var(--font-serif);
     line-height: 1;
 }
 
 .modal-price {
-    font-size: 1.1rem;
+    font-size: 2rem;
     color: #666;
     margin-bottom: 1.5rem;
 }
@@ -1304,8 +1381,7 @@ main {
 .modal-option label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.3rem;
-    font-size: 0.8rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
 }
 
@@ -1322,7 +1398,7 @@ main {
     cursor: pointer;
     transition: all 0.2s;
     font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-size: 1.3rem;
 }
 
 .option-btn:hover, .option-btn.active {
@@ -1336,7 +1412,7 @@ main {
     padding: 0.6rem;
     border: 1px solid #ddd;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     cursor: pointer;
     background-color: transparent;
 }
@@ -1369,7 +1445,7 @@ main {
     border: none;
     text-align: center;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     -moz-appearance: textfield;
 }
 
@@ -1454,7 +1530,7 @@ main {
     font-family: var(--font-sans);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     text-align: left;
 }
 
@@ -1465,8 +1541,8 @@ main {
 }
 
 .accordion-content p {
-    padding-bottom: 1rem;
-    font-size: 0.85rem;
+    padding-bottom: 1.2rem;
+    font-size: 1.2rem;
     color: #666;
     line-height: 1.4;
 }
@@ -1638,7 +1714,7 @@ main {
      text-align: center;
      margin-bottom: 3rem;
      color: #666;
-     font-size: 1.1rem;
+     font-size: 1.4rem;
      margin-top: -2.5rem; /* Pull up closer to title */
 }
 
@@ -1764,7 +1840,7 @@ main {
     background: none;
     border: none;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1776,7 +1852,7 @@ main {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     color: #666;
     border-right: 1px solid #eee;
     padding-right: 2rem;
@@ -1792,7 +1868,7 @@ main {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #666;
     transition: all 0.2s;
 }
@@ -1808,7 +1884,7 @@ main {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    font-size: 0.9rem;
+    font-size: 1.5rem;
     color: #666;
 }
 
@@ -1820,6 +1896,7 @@ main {
     color: var(--text-color);
     cursor: pointer;
     outline: none;
+    font-size: 1.3rem;
 }
 
 /* Catalog Grid */
@@ -2067,7 +2144,7 @@ main {
     }
     
     .modal-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .close-modal-btn {

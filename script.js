@@ -12,33 +12,36 @@ window.addEventListener('scroll', () => {
 });
 
 // Hero Animation
-const heroTimeline = gsap.timeline();
+// Hero Animation
+if (document.querySelector('.hero')) {
+    const heroTimeline = gsap.timeline();
 
-heroTimeline.from(".hero-title .line", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power4.out"
-})
-.from(".hero-subtitle", {
-    y: 20,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power2.out"
-}, "-=0.5")
-.from(".cta-button", {
-    y: 20,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power2.out"
-}, "-=0.6")
-.from(".hero-image-container", {
-    scale: 1.1,
-    opacity: 0,
-    duration: 1.5,
-    ease: "power2.out"
-}, "-=1.5");
+    heroTimeline.from(".hero-title .line", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power4.out"
+    })
+    .from(".hero-subtitle", {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out"
+    }, "-=0.5")
+    .from(".cta-button", {
+        y: 20,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out"
+    }, "-=0.6")
+    .from(".hero-image-container", {
+        scale: 1.1,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power2.out"
+    }, "-=1.5");
+}
 
 // --- Data Objects ---
 
@@ -117,7 +120,7 @@ function renderCarouselContent(sectionId, data, renderFunc) {
 renderCarouselContent('recent', products, renderProduct);
 renderCarouselContent('home-showcase', homeShowcase, renderShowcase);
 renderCarouselContent('bestsellers', bestSellers, renderProduct);
-renderCarouselContent('styles-section', styles, renderStyle); // Note: Need to add ID to styles section in HTML
+renderCarouselContent('styles-section', styles, renderStyle);
 
 // --- Carousel Logic ---
 function initCarousel(carousel) {
@@ -196,7 +199,6 @@ function initCarousel(carousel) {
 }
 
 // Initialize
-// We wrap in a small timeout or just call now since JS runs at end of body
 document.querySelectorAll('.product-carousel').forEach(initCarousel);
 
 // Scroll Animations for Sections
@@ -227,29 +229,111 @@ const sizeBtns = document.querySelectorAll('.size-selector .option-btn');
 
 // Open Modal
 function openModal(product) {
+    if (!modal) return;
+    
     modalTitle.textContent = product.title;
-    modalPrice.textContent = product.price; // Or specific price
+    modalPrice.textContent = product.price;
+
+    const mainContainer = document.querySelector('.main-image-container');
+    const thumbContainer = document.querySelector('.thumbnails-container');
     
-    // Reset images to standard set for demo (or use product specific if available)
-    // Using the 'items' folder content as requested for ALL recent items for this demo
-    // Ideally you'd map these per product.
-    modalMainImg.src = "assets/images/item/original.jpg";
+    // Prepare images list
+    let images = [];
+    if (product.images && product.images.length > 0) {
+        images = product.images;
+    } else if (product.img) {
+        images = [product.img];
+        if (product.hoverImg) images.push(product.hoverImg);
+        if (images.length < 3) {
+             images.push("assets/images/item/original.jpg");
+             images.push("assets/images/item/m1.jpg");
+        }
+    } else {
+        images = [
+            "assets/images/item/original.jpg",
+            "assets/images/item/m1.jpg", 
+            "assets/images/item/m2.jpg", 
+            "assets/images/item/m3.png"
+        ];
+    }
     
-    // Reset thumbs active state
-    modalThumbs.forEach(t => t.classList.remove('active'));
-    modalThumbs[0].classList.add('active');
+    mainContainer.innerHTML = '';
+    thumbContainer.innerHTML = '';
+    
+    let currentIndex = 0;
+
+    // Helper to update view
+    const updateView = () => {
+        // Update Main Images
+        const allMain = document.querySelectorAll('.modal-main-img');
+        allMain.forEach((img, idx) => {
+            if (idx === currentIndex) img.classList.add('active');
+            else img.classList.remove('active');
+        });
+
+        // Update Thumbs (if visible on desktop)
+        const allThumbs = document.querySelectorAll('.modal-thumb');
+        allThumbs.forEach((t, idx) => {
+             if (idx === currentIndex) t.classList.add('active');
+             else t.classList.remove('active');
+        });
+    };
+
+    // Create Images
+    images.forEach((imgSrc, index) => {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.classList.add('modal-main-img');
+        if (index === 0) img.classList.add('active');
+        mainContainer.appendChild(img);
+
+        const thumb = document.createElement('img');
+        thumb.src = imgSrc;
+        thumb.classList.add('modal-thumb');
+        if (index === 0) thumb.classList.add('active');
+        
+        thumb.addEventListener('click', () => {
+             currentIndex = index;
+             updateView();
+        });
+        thumbContainer.appendChild(thumb);
+    });
+
+    // Add Navigation Buttons (Visible on Mobile via CSS)
+    if (images.length > 1) {
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'modal-nav-btn prev';
+        prevBtn.innerHTML = '&#10094;'; // Left Arrow
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateView();
+        };
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'modal-nav-btn next';
+        nextBtn.innerHTML = '&#10095;'; // Right Arrow
+        nextBtn.onclick = (e) => {
+             e.stopPropagation();
+             currentIndex = (currentIndex + 1) % images.length;
+             updateView();
+        };
+
+        mainContainer.appendChild(prevBtn);
+        mainContainer.appendChild(nextBtn);
+    }
 
     // Show modal
     modal.style.display = 'flex';
-    // Small delay to allow display flex to apply before opacity transition
     setTimeout(() => {
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }, 10);
 }
 
 // Close Modal
 function closeModal() {
+    if (!modal) return;
     modal.classList.remove('active');
     setTimeout(() => {
         modal.style.display = 'none';
@@ -258,24 +342,29 @@ function closeModal() {
 }
 
 // Event Listeners
-closeModalBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-});
+if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeModal);
+}
+
+if (modal) {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+}
 
 // Attach Click to "Recent" Products
-// Since they are dynamic, we use delegation or re-attach. 
-// We already have render logic. Let's attach to the container #recent
 const recentSection = document.querySelector('#recent');
-recentSection.addEventListener('click', (e) => {
-    const card = e.target.closest('.product-card');
-    if (card) {
-        // Find product data - simplistic way: match title
-        const title = card.querySelector('h3').textContent;
-        const product = products.find(p => p.title === title) || { title: title, price: card.querySelector('.price').textContent };
-        openModal(product);
-    }
-});
+if (recentSection) {
+    recentSection.addEventListener('click', (e) => {
+        const card = e.target.closest('.product-card');
+        if (card) {
+            // Find product data - simplistic way: match title
+            const title = card.querySelector('h3').textContent;
+            const product = products.find(p => p.title === title) || { title: title, price: card.querySelector('.price').textContent };
+            openModal(product);
+        }
+    });
+}
 
 // Gallery Switcher (Global function for onclick in HTML, or addEventListener here)
 // Defined globally or attached:
@@ -332,7 +421,7 @@ function openMiniModal(product, triggerBtn) {
     `;
 
     // Move Modal to the Item Container (Sticky inside)
-    const itemContainer = triggerBtn.closest('.showcase-item, .gallery-item');
+    const itemContainer = triggerBtn.closest('.showcase-item, .gallery-item, .masonry-item');
     if (itemContainer) {
         // Reset styles that might have been set previously
         miniModal.style.display = 'none'; 
@@ -379,7 +468,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.shop-look-btn')) {
         const btn = e.target.closest('.shop-look-btn');
         // It could be in .showcase-item OR .gallery-item
-        const item = btn.closest('.showcase-item, .gallery-item');
+        const item = btn.closest('.showcase-item, .gallery-item, .masonry-item');
         
         if (item) {
             const img = item.querySelector('img');
@@ -398,9 +487,16 @@ document.addEventListener('click', (e) => {
     }
 });
 
-closeMiniModalBtn.addEventListener('click', closeMiniModal);
-miniModal.addEventListener('click', (e) => {
-    if (e.target === miniModal) closeMiniModal();
-});
+
+
+if (miniModal && closeMiniModalBtn) {
+    closeMiniModalBtn.addEventListener('click', closeMiniModal);
+    miniModal.addEventListener('click', (e) => {
+        if (e.target === miniModal) closeMiniModal();
+    });
+}
+
+
+
 
 

@@ -59,8 +59,7 @@ h1, h2, h3, h4 {
 
 /* Utility */
 .container {
-    max-width: var(--spacing-container);
-    margin: 0 auto;
+    margin: 0 4rem;
     padding: 0 2rem;
 }
 
@@ -168,6 +167,180 @@ h1, h2, h3, h4 {
     width: 24px;
     height: 2px;
     background-color: var(--text-color);
+}
+
+/* Dropdown Menu */
+.nav-item.dropdown {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-trigger {
+    cursor: pointer;
+    padding-bottom: 2rem; 
+    margin-bottom: -2rem;
+    position: relative;
+    z-index: 1001; /* Above menu */
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Slightly lower start */
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    min-width: 600px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.05); /* Softer, deeper shadow */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Custom ease */
+    border-radius: 12px; /* Smooth corners */
+    z-index: 1000;
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Arrow indicator (Triangle) */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-top: 1px solid rgba(0,0,0,0.03);
+    border-left: 1px solid rgba(0,0,0,0.03);
+    z-index: 1;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    top: 100%; /* Snap to position */
+}
+
+.dropdown-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+}
+
+.dropdown-column h4 {
+    font-family: var(--font-serif); /* Switch to serif for elegance */
+    font-size: 1.1rem;
+    font-weight: 500; /* Lighter weight */
+    color: var(--text-color); /* Darker */
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.dropdown-column h4::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 30px;
+    height: 1px;
+    background-color: var(--text-color); /* Accent line */
+}
+
+.dropdown-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem; /* Use gap instead of margin */
+}
+
+.dropdown-list li {
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Stagger list items on hover */
+.nav-item.dropdown:hover .dropdown-list li {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.nav-item.dropdown:hover .dropdown-list li:nth-child(1) { transition-delay: 0.1s; }
+.nav-item.dropdown:hover .dropdown-list li:nth-child(2) { transition-delay: 0.15s; }
+.nav-item.dropdown:hover .dropdown-list li:nth-child(3) { transition-delay: 0.2s; }
+.nav-item.dropdown:hover .dropdown-list li:nth-child(4) { transition-delay: 0.25s; }
+
+
+.dropdown-list a {
+    font-size: 0.95rem;
+    color: #555;
+    text-transform: none;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+    position: relative;
+    width: fit-content;
+}
+
+/* Underline slide effect */
+.dropdown-list a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--text-color);
+    transition: width 0.3s ease;
+}
+
+.dropdown-list a:hover {
+    color: var(--text-color);
+}
+
+.dropdown-list a:hover::after {
+    width: 100%;
+}
+
+/* Style Grid Menu */
+.style-grid-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 1rem;
+}
+
+.style-grid-menu a {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: none;
+    font-weight: 400;
+    transition: all 0.2s;
+    padding: 0.2rem 0;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.style-grid-menu a:hover {
+    color: var(--text-color);
+    transform: translateX(5px); /* Simple slide */
+}
+
+/* Hide default nav underline */
+.dropdown-menu a::after {
+    display: block; /* We use it for the list items, but ensure it's reset correctly */
+}
+.style-grid-menu a::after {
+    display: none; /* No underline for style grid, just slide */
 }
 
 /* Hero Section */
@@ -507,7 +680,7 @@ h1, h2, h3, h4 {
     position: relative;
     overflow: hidden;
     width: 600px;
-    height: 500px;
+    height: 600px;
     display: block;
     flex-shrink: 0;
 }
@@ -538,7 +711,6 @@ h1, h2, h3, h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
 }
 
 /* Footer */
@@ -689,7 +861,19 @@ h1, h2, h3, h4 {
 .main-image-container img {
     height: 100%;
     width: 100%;
-    object-fit: contain; /* Ensure full image is visible without scrolling */
+    object-fit: contain;
+    /* Desktop: Hide by default, show only active */
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.main-image-container img.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
 }
 
 .thumbnails-container {
@@ -826,6 +1010,40 @@ h1, h2, h3, h4 {
   margin: 0;
 }
 
+/* Nav Buttons (Hidden by default, shown on mobile/tablet) */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: none; /* Hidden on Desktop */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.2rem;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.modal-nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.modal-nav-btn.prev { left: 10px; }
+.modal-nav-btn.next { right: 10px; }
+
+.qty-selector input::-webkit-outer-spin-button,
+.qty-selector input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .add-cart-btn-large {
     flex-grow: 1;
     background-color: var(--text-color);
@@ -954,7 +1172,7 @@ h1, h2, h3, h4 {
     width: 90%; 
     max-width: 380px; /* Restored exact original max-width */
     border-radius: 4px;
-    padding: 1.5rem 0;
+    padding: 0.5rem 0;
     box-shadow: 0 5px 25px rgba(0,0,0,0.15);
     transform: translateY(10px);
     opacity: 0;
@@ -981,8 +1199,6 @@ h1, h2, h3, h4 {
     font-size: 1rem; /* Slightly smaller/sharper */
     font-family: 'Oswald', sans-serif; /* Condensed look from image */
     text-transform: uppercase; /* Assumption based on "Diseños encontrados" usually being header style, verify */
-    /* Screenshot showed "Diseños encontrados" - let's stick to standard Sans Bold if Oswald isn't loaded, or assume Impact-like */
-    /* Let's use standard sans, but condensed logic */
     font-family: var(--font-sans);
     font-weight: 700;
     text-transform: none; /* Screenshot appeared mixed case */
@@ -1003,18 +1219,12 @@ h1, h2, h3, h4 {
 }
 
 .mini-modal-body {
-    padding: 1.2rem 1.5rem;
+    padding: 0.2rem 0.5rem;
 }
 
 .mini-product-row {
     display: flex;
     align-items: center;
-}
-
-.mini-product-row img{
-    width: 45%;
-    aspect-ratio: 3/3;
-    object-fit: cover;
 }
 
 .mini-product-info {
@@ -1050,80 +1260,453 @@ h1, h2, h3, h4 {
     color: #333;
 }
 
-
-/* Inspiration Gallery Styles */
-.gallery-grid {
-    display: grid;
-    /* Use auto-fill with a smaller minmax to allow spans to work well, or keep 300px */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-auto-rows: 250px; /* Fixed row height for consistency in masonry logic */
-    grid-auto-flow: dense; /* Crucial for packing */
-    gap: 1.5rem;
-    padding-bottom: 4rem;
+/* Masonry Gallery Styles */
+.inspiration-gallery {
+    padding-top: 2rem; /* Reduced padding from top */
 }
 
-.gallery-item {
-    overflow: hidden;
-    border-radius: 2px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
+.section-subtitle {
+     text-align: center;
+     margin-bottom: 3rem;
+     color: #666;
+     font-size: 1.1rem;
+     margin-top: -2.5rem; /* Pull up closer to title */
+}
+
+.masonry-grid {
+    column-count: 3;
+    column-gap: 1.5rem;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
     position: relative;
-    /* Reset aspect-ratio since we use grid rows/cols */
+    overflow: hidden;
 }
 
-/* Span Classes */
-.gallery-item.wide {
-    grid-column: span 2;
-}
-
-.gallery-item.tall {
-    grid-row: span 2;
-}
-
-.gallery-item.big {
-    grid-column: span 2;
-    grid-row: span 2;
-}
-
-
-.gallery-item:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    z-index: 1; /* Bring to front on hover */
-}
-
-.gallery-item img {
+.masonry-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
     display: block;
+    height: auto;
+    transition: transform 0.5s ease;
 }
 
-/* Support for Shop Look Button inside Gallery Items */
-/* We use the shared .shop-look-btn class defined earlier. 
-   We just need to ensure the hover effect works for gallery items too. */
+.masonry-item:hover img {
+    transform: scale(1.02);
+}
 
-.gallery-item:hover .shop-look-btn {
+/* Make shop look button work for masonry items too */
+.masonry-item:hover .shop-look-btn {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Mobile responsivenss for grid */
+@media (max-width: 900px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
 @media (max-width: 600px) {
-    .gallery-grid {
-        grid-template-columns: 1fr; /* Stack on mobile */
-        grid-auto-rows: auto;
-    }
-    .gallery-item.wide, .gallery-item.tall, .gallery-item.big {
-        grid-column: auto;
-        grid-row: auto;
-        aspect-ratio: 1; /* Force square or intrinsic */
+    .masonry-grid {
+        column-count: 1;
     }
 }
 
 
-.getInspired {
-    max-width: 100%;
-    width: 88%;   
+
+.mini-product-row img{
+    width: 50%;
 }
 
+
+/* =========================================
+   Category Page Styles (Minimalist)
+   ========================================= */
+
+/* Category Hero */
+.cat-hero-section {
+    padding: 10rem 0 4rem; /* Top padding for fixed nav */
+    background-color: #fff;
+}
+
+.cat-hero-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.cat-hero-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.cat-hero-content {
+    padding-right: 2rem;
+}
+
+.cat-title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.cat-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+/* Filter Bar */
+.filter-bar {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+    margin-bottom: 3rem;
+    top: 80px; /* Below nav */
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    z-index: 900;
+}
+
+.filter-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+}
+
+.view-options {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+    border-right: 1px solid #eee;
+    padding-right: 2rem;
+}
+
+.view-btn {
+    border: 1px solid #ddd;
+    background: transparent;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.view-btn:hover, .view-btn.active {
+    background: var(--text-color);
+    color: #fff;
+    border-color: var(--text-color);
+}
+
+
+.sort-options {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.sort-select {
+    border: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    outline: none;
+}
+
+/* Catalog Grid */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2rem;
+    row-gap: 4rem;
+    margin-bottom: 3rem;
+    transition: grid-template-columns 0.3s ease;
+}
+
+.catalog-grid.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.catalog-grid.cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+/* Load More */
+.load-more-container {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+    padding: 0.8rem 2.5rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.secondary-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Catalog Item (Reusing/Extending Product Card) */
+.catalog-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.catalog-item:hover {
+    transform: translateY(-5px);
+}
+
+.catalog-thumb-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.catalog-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease;
+}
+
+.img-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 1;
+}
+
+.img-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+}
+
+.catalog-item:hover .img-hover {
+    opacity: 1;
+}
+
+.catalog-info {
+    text-align: center;
+}
+
+.catalog-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    font-weight: 500;
+}
+
+.catalog-price {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+/* Responsive */
+/* Responsive */
+@media (max-width: 900px) {
+    .container{
+        margin: 0;
+    }
+    .cat-hero-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .cat-hero-image img {
+        height: 300px;
+    }
+    
+    /* Force 2 columns on tablet regardless of user setting */
+    .catalog-grid,
+    .catalog-grid.cols-3,
+    .catalog-grid.cols-4,
+    .catalog-grid.cols-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    /* Force 1 column on mobile */
+    .catalog-grid,
+    .catalog-grid.cols-3,
+    .catalog-grid.cols-4,
+    .catalog-grid.cols-5 {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-bar {
+        font-size: 0.8rem;
+    }
+
+    .filter-bar .container {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start; /* Align left */
+    }
+
+    .filter-left {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .filter-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .view-options {
+        padding-right: 0.5rem;
+        border-right: none; /* Remove border on mobile to save space if needed, or keep it */
+    }
+    
+    .sort-options {
+        flex: 1;
+        justify-content: flex-end;
+    }
+    
+    /* Adjust text sizes for mobile */
+    .view-options span, .sort-options span {
+        display: none; /* Hide labels "View:" and "Sort by:" on very small screens to save space */
+    }
+
+    /* Modal Responsive Adjustments */
+    .modal-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        padding: 3.5rem 1rem 1rem;
+        transform: translateY(0);
+    }
+    
+    .modal-backdrop.active .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        overflow-y: auto;
+        padding-bottom: 2rem;
+    }
+    
+    .main-image-container {
+        height: 40vh;
+        margin-top: 1rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Nav Buttons: Visible from here down */
+    .modal-nav-btn {
+        display: flex; /* Show on tablet/mobile */
+    }
+
+    .modal-main-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* Size Selector Touch Friendly */
+    .size-selector {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+
+    .option-btn {
+        width: 100%;
+        padding: 0.8rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .thumbnails-container {
+        display: none;
+    }
+    
+    .modal-info {
+        padding-right: 0;
+        overflow-y: visible;
+    }
+    
+    .modal-title {
+        font-size: 1.5rem;
+    }
+    
+    .close-modal-btn {
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

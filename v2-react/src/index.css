@@ -125,7 +125,7 @@ h1, h2, h3, h4 {
 
 /* Utility */
 .container {
-    margin: 0 2rem;
+    margin: 0 4rem;
     padding: 0 2rem;
 }
 
@@ -447,6 +447,7 @@ main {
     font-size: 2rem;
     line-height: 1.2;
     color: #555;
+    margin-bottom: 2.5rem;
     max-width: 400px;
 }
 
@@ -560,11 +561,6 @@ main {
     will-change: transform;
 }
 
-@media (max-width: 768px) {
-    .carousel-track {
-        gap: 1rem;
-    }
-}
 .carousel-item {
     flex-shrink: 0;
     width: 280px; 
@@ -581,22 +577,12 @@ main {
 }
 
 #styles-section .carousel-item {
-    width: calc((100% - 4rem) / 3);
-}
-
-@media (max-width: 1024px) {
-    #styles-section .carousel-item {
-        width: calc((100% - 2rem) / 2);
-    }
+    width: calc((100% - 6rem) / 2);
 }
 
 @media (max-width: 768px) {
-    #styles-section .container {
-        padding: 0 1.5rem;
-    }
-
     #styles-section .carousel-item {
-        width: 100%;
+        width: calc((100% - 6rem) / 1);
     }
 }
 
@@ -609,7 +595,7 @@ main {
 #bestsellers .container,
 #styles-section .container {
     max-width: 100vw; /* Much wider than standard 1200px */
-    padding: 0 2rem;
+    padding: 0 4rem;
 }
 
 /* For recent, verify the item width calc allows for the new fluid width */
@@ -1021,7 +1007,7 @@ main {
 
     /* Move indicators up a bit if needed */
     .hero-indicators {
-        bottom: 2rem;
+        bottom: 6rem;
         z-index: 4;
     }
     
@@ -2173,9 +2159,3 @@ main {
         justify-content: center;
     }
 }
-
-.container-find-your-style {
-    margin: 0;
-    overflow: hidden;
-}
-
